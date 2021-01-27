@@ -11,7 +11,9 @@
       <span :style="{ fontSize: '14px', color: '#999', marginLeft: '10px' }">
         (点击号码可以删除)
       </span>
-      <button @click="saveResult">导出抽奖结果</button>
+      <el-button @click="saveResult" size="mini" style="margin-left: 1rem"
+        >导出抽奖结果</el-button
+      >
     </div>
 
     <div

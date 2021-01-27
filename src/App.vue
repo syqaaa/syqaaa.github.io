@@ -10,6 +10,14 @@
       </el-button>
     </header>
     <div id="main" :class="{ mask: showRes }"></div>
+    <div class="prize-list">
+      <div v-for="(item, index) in prizeList" :key="index" class="list">
+        <div class="img-wrapper">
+          <img :src="item.img" alt="prize-img" class="prize-img" />
+        </div>
+        <div style="color: #fff; margin-left: 1rem">{{ item.label }}</div>
+      </div>
+    </div>
     <div id="tags">
       <ul v-for="item in datas" :key="item.key">
         <li>
@@ -136,6 +144,22 @@ export default {
   components: { LotteryConfig, Publicity, Tool, Result },
 
   computed: {
+    prizeList() {
+      return [
+        { img: require('./assets/pc.png'), label: '特等奖：笔记本电脑' },
+        { img: require('./assets/cook.png'), label: '一等奖：美的智能低糖煲' },
+        {
+          img: require('./assets/robot.png'),
+          label: '二等奖：美的炒菜机器人',
+        },
+        { img: require('./assets/pan.png'), label: '三等奖：美的多功能锅' },
+        { img: require('./assets/pot.png'), label: '四等奖：美的养生壶' },
+        {
+          img: require('./assets/toothBrush.png'),
+          label: '阳光普照奖：电动牙刷',
+        },
+      ];
+    },
     resCardStyle() {
       const style = { fontSize: '30px' };
       const { number } = this.config;
@@ -380,6 +404,7 @@ export default {
 #root {
   height: 100%;
   position: relative;
+  // background: linear-gradient(0deg, rgba(1, 2, 59, 1), rgba(17, 15, 155, 1));
   background-image: url('./assets/bg1.jpg');
   background-size: 100% 100%;
   background-position: center center;
@@ -491,5 +516,35 @@ export default {
       z-index: 1;
     }
   }
+}
+
+.prize-list {
+  width: 15%;
+  position: absolute;
+  left: 1rem;
+  top: 5rem;
+}
+.img-wrapper {
+  height: 8vh;
+  width: 8vh;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.prize-img {
+  width: 90%;
+  height: 90%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 1rem 0 1rem 1rem;
+  border: 1px solid rgba(143, 141, 141, 0.3);
+  border-radius: 5px;
 }
 </style>
