@@ -16,7 +16,7 @@
           <a
             href="javascript:void(0);"
             :style="{
-              color: '#fff'
+              color: '#fff',
             }"
           >
             {{ item.name ? item.name : item.key }}
@@ -38,26 +38,26 @@
             @click="showRes = false"
             :class="{
               numberOver:
-                !!photos.find(d => d.id === item) ||
-                !!list.find(d => d.key === item)
+                !!photos.find((d) => d.id === item) ||
+                !!list.find((d) => d.key === item),
             }"
           >
-            <span class="cont" v-if="!photos.find(d => d.id === item)">
+            <span class="cont" v-if="!photos.find((d) => d.id === item)">
               <span
-                v-if="!!list.find(d => d.key === item)"
+                v-if="!!list.find((d) => d.key === item)"
                 :style="{
-                  fontSize: '40px'
+                  fontSize: '40px',
                 }"
               >
-                {{ list.find(d => d.key === item).name }}
+                {{ list.find((d) => d.key === item).name }}
               </span>
               <span v-else>
                 {{ item }}
               </span>
             </span>
             <img
-              v-if="photos.find(d => d.id === item)"
-              :src="photos.find(d => d.id === item).value"
+              v-if="photos.find((d) => d.id === item)"
+              :src="photos.find((d) => d.id === item).value"
               alt="photo"
               :width="160"
               :height="160"
@@ -93,7 +93,7 @@
     <Result :visible.sync="showResult"></Result>
 
     <span class="copy-right">
-      Copyright©zhangyongfeng5350@gmail.com
+      <!-- Copyright©zhangyongfeng5350@gmail.com -->
     </span>
 
     <audio
@@ -117,16 +117,19 @@ import Tool from '@/components/Tool';
 import bgaudio from '@/assets/bg.mp3';
 import beginaudio from '@/assets/begin.mp3';
 import {
+  setData,
   getData,
+  removeData,
   configField,
   resultField,
   newLotteryField,
   conversionCategoryName,
-  listField
+  listField,
 } from '@/helper/index';
 import { luckydrawHandler } from '@/helper/algorithm';
 import Result from '@/components/Result';
 import { database, DB_STORE_NAME } from '@/helper/db';
+import { info } from '@/helper/info';
 export default {
   name: 'App',
 
@@ -148,7 +151,7 @@ export default {
     config: {
       get() {
         return this.$store.state.config;
-      }
+      },
     },
     result: {
       get() {
@@ -156,7 +159,7 @@ export default {
       },
       set(val) {
         this.$store.commit('setResult', val);
-      }
+      },
     },
     list() {
       return this.$store.state.list;
@@ -176,13 +179,13 @@ export default {
       const nums = number >= 1500 ? 500 : this.config.number;
       const configNum = number > 1500 ? Math.floor(number / 3) : number;
       const randomShowNums = luckydrawHandler(configNum, [], nums);
-      const randomShowDatas = randomShowNums.map(item => {
-        const listData = this.list.find(d => d.key === item);
-        const photo = this.photos.find(d => d.id === item);
+      const randomShowDatas = randomShowNums.map((item) => {
+        const listData = this.list.find((d) => d.key === item);
+        const photo = this.photos.find((d) => d.id === item);
         return {
           key: item * (number > 1500 ? 3 : 1),
           name: listData ? listData.name : '',
-          photo: photo ? photo.value : ''
+          photo: photo ? photo.value : '',
         };
       });
       return randomShowDatas;
@@ -192,9 +195,11 @@ export default {
     },
     photos() {
       return this.$store.state.photos;
-    }
+    },
   },
   created() {
+    setData(listField, info);
+    removeData(resultField);
     const data = getData(configField);
     if (data) {
       this.$store.commit('setConfig', Object.assign({}, data));
@@ -207,7 +212,7 @@ export default {
     const newLottery = getData(newLotteryField);
     if (newLottery) {
       const config = this.config;
-      newLottery.forEach(item => {
+      newLottery.forEach((item) => {
         this.$store.commit('setNewLottery', item);
         if (!config[item.key]) {
           this.$set(config, item.key, 0);
@@ -231,7 +236,7 @@ export default {
       resArr: [],
       category: '',
       audioPlaying: false,
-      audioSrc: bgaudio
+      audioSrc: bgaudio,
     };
   },
   watch: {
@@ -241,8 +246,8 @@ export default {
         this.$nextTick(() => {
           this.reloadTagCanvas();
         });
-      }
-    }
+      },
+    },
   },
   mounted() {
     this.startTagCanvas();
@@ -282,14 +287,14 @@ export default {
       });
     },
     getPhoto() {
-      database.getAll(DB_STORE_NAME).then(res => {
+      database.getAll(DB_STORE_NAME).then((res) => {
         if (res && res.length > 0) {
           this.$store.commit('setPhotos', res);
         }
       });
     },
     speed() {
-      return [0.1 * Math.random() + 0.01, -(0.1 * Math.random() + 0.01)];
+      return [0.5 * Math.random() + 0.01, -(0.1 * Math.random() + 0.01)];
     },
     createCanvas() {
       const canvas = document.createElement('canvas');
@@ -307,7 +312,7 @@ export default {
         dragControl: 1,
         textHeight: 20,
         noSelect: true,
-        lock: 'xy'
+        lock: 'xy',
       });
     },
     reloadTagCanvas() {
@@ -339,6 +344,7 @@ export default {
 
         const { number } = config;
         const { category, mode, qty, remain, allin } = form;
+        console.log('form', form);
         let num = 1;
         if (mode === 1 || mode === 5) {
           num = mode;
@@ -360,14 +366,14 @@ export default {
         }
         const oldRes = this.result[category] || [];
         const data = Object.assign({}, this.result, {
-          [category]: oldRes.concat(resArr)
+          [category]: oldRes.concat(resArr),
         });
         this.result = data;
         window.TagCanvas.SetSpeed('rootcanvas', [5, 1]);
         this.running = !this.running;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">

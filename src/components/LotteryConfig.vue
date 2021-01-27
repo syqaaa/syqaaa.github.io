@@ -7,9 +7,7 @@
     class="c-LotteryConfig"
   >
     <div class="c-LotteryConfigtitle" slot="title">
-      <span :style="{ fontSize: '16px', marginRight: '20px' }">
-        抽奖配置
-      </span>
+      <span :style="{ fontSize: '16px', marginRight: '20px' }"> 抽奖配置 </span>
       <el-button size="mini" @click="addLottery">增加奖项</el-button>
       <el-button size="mini" type="primary" @click="onSubmit"
         >保存配置</el-button
@@ -31,10 +29,42 @@
             :step="1"
           ></el-input>
         </el-form-item>
+        <el-form-item label="特等奖">
+          <el-input
+            type="number"
+            v-model="form.specialPrize"
+            :min="0"
+            :step="1"
+          ></el-input>
+        </el-form-item>
         <el-form-item label="一等奖">
           <el-input
             type="number"
             v-model="form.firstPrize"
+            :min="0"
+            :step="1"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="二等奖">
+          <el-input
+            type="number"
+            v-model="form.secondPrize"
+            :min="0"
+            :step="1"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="三等奖">
+          <el-input
+            type="number"
+            v-model="form.thirdPrize"
+            :min="0"
+            :step="1"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="四等奖">
+          <el-input
+            type="number"
+            v-model="form.forthPrize"
             :min="0"
             :step="1"
           ></el-input>
@@ -50,7 +80,7 @@
             :step="1"
             v-model="form[newitem.key]"
             @change="
-              val => {
+              (val) => {
                 form[newitem.key] = Number(val);
               }
             "
@@ -84,7 +114,7 @@ import { randomNum } from '@/helper/algorithm';
 export default {
   name: 'LotteryConfig',
   props: {
-    visible: Boolean
+    visible: Boolean,
   },
   computed: {
     form: {
@@ -94,16 +124,16 @@ export default {
       set(val) {
         // this.$store.commit('setConfig', val);
         return val;
-      }
+      },
     },
     storeNewLottery() {
       return this.$store.state.newLottery;
-    }
+    },
   },
   data() {
     return {
       showAddLottery: false,
-      newLottery: { name: '' }
+      newLottery: { name: '' },
     };
   },
   methods: {
@@ -114,7 +144,7 @@ export default {
 
       this.$message({
         message: '保存成功',
-        type: 'success'
+        type: 'success',
       });
 
       this.$nextTick(() => {
@@ -136,13 +166,13 @@ export default {
       const field = this.randomField();
       const data = {
         key: field,
-        name: this.newLottery.name
+        name: this.newLottery.name,
       };
       this.$store.commit('setNewLottery', data);
 
       this.showAddLottery = false;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">

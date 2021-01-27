@@ -7,12 +7,17 @@
       arrow="never"
       :interval="3000"
     >
-      <el-carousel-item v-for="item in message" :key="item.key">
+      <!-- <el-carousel-item v-for="item in message" :key="item.key">
         <div class="item" :class="{ actiname: item.key === 0 }">
           <span v-if="item.title" class="title"> {{ item.title }}</span>
           <span v-if="item.value" class="value">
             {{ item.value }}
           </span>
+        </div>
+      </el-carousel-item> -->
+      <el-carousel-item>
+        <div class="item actiname">
+          <span>年会抽奖</span>
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -31,26 +36,27 @@ export default {
       return this.$store.state.result;
     },
     message() {
-      const { result, config } = this;
-      const fields = Object.keys(config);
-
-      let message = [{ key: 0, title: config.name }];
+      const { result, config } = this; //config:{name: '年会抽奖',number: 90,specialPrize: 2,...}
+      const fields = Object.keys(config); //["name", "number", "specialPrize", "firstPrize", "secondPrize", "thirdPrize", "forthPrize", "commonPrize"]
+      // console.log('result', result);
+      let message = [{ key: 0, title: config.name }]; //
       fields.forEach((item, index) => {
         let label = conversionCategoryName(item);
+        // console.log('label', label);
         if (result[item] && config[item] > 0) {
           message.push({
             key: index + 1,
             title: `${label}抽奖结果:`,
             value: `${
               result[item].length > 0 ? result[item].join('、') : '暂未抽取'
-            }`
+            }`,
           });
         }
       });
-
+      // console.log('message', message);
       return message;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">
