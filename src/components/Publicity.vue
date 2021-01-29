@@ -17,7 +17,7 @@
       </el-carousel-item> -->
       <el-carousel-item>
         <div class="item actiname">
-          <span>年会抽奖</span>
+          <span class="title-text">公司年会抽奖</span>
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -63,7 +63,7 @@ export default {
 .c-Publicity {
   height: 100%;
   // width: 1000px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #101e3a; //rgba(255, 255, 255, 0.1);
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -75,18 +75,23 @@ export default {
     text-align: center;
     color: #fff;
     font-size: 16px;
-    .title {
-      color: #ccc;
+    .title-text {
+      background: linear-gradient(45deg, #f00, #fff, #00f);
+      -webkit-background-clip: text;
+      color: transparent;
     }
-    .value {
-      margin-left: 10px;
-    }
-    &.actiname {
-      .title {
-        color: red;
-        font-size: 20px;
-      }
-    }
+    // .title {
+    //   color: #ccc;
+    // }
+    // .value {
+    //   margin-left: 10px;
+    // }
+    // &.actiname {
+    //   .title {
+    //     color: red;
+    //     font-size: 20px;
+    //   }
+    // }
   }
 }
 </style>

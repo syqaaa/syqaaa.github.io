@@ -1,11 +1,13 @@
 <template>
   <div id="tool">
     <el-button @click="startHandler" type="primary" size="mini">{{
-      running ? '停止' : '开始'
+      running ? '停止抽奖' : '开始抽奖'
     }}</el-button>
-    <el-button size="mini" @click="showRemoveoptions = true"> 重置 </el-button>
-    <!-- <el-button size="mini" @click="showImport = true"> 导入名单 </el-button>
-    <el-button size="mini" @click="showImportphoto = true">
+    <el-button size="mini" @click="showRemoveoptions = true">
+      重置结果
+    </el-button>
+    <el-button size="mini" @click="showImport = true"> 导入名单 </el-button>
+    <!-- <el-button size="mini" @click="showImportphoto = true">
       导入照片
     </el-button> -->
     <el-dialog
@@ -44,6 +46,7 @@
             <el-option label="一次抽取完" :value="0"></el-option>
             <el-option label="抽1人" :value="1"></el-option>
             <el-option label="抽5人" :value="5"></el-option>
+            <el-option label="抽10人" :value="10"></el-option>
             <!-- <el-option label="自定义" :value="99"></el-option> -->
           </el-select>
         </el-form-item>
@@ -271,7 +274,11 @@ export default {
           return this.$message.error('本次抽奖人数已超过本奖项的剩余人数');
         }
       }
-      if (this.form.mode === 1 || this.form.mode === 5) {
+      if (
+        this.form.mode === 1 ||
+        this.form.mode === 5 ||
+        this.form.mode === 10
+      ) {
         if (this.form.mode > this.remain) {
           return this.$message.error('本次抽奖人数已超过本奖项的剩余人数');
         }

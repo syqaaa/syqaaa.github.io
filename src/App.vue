@@ -147,16 +147,16 @@ export default {
     prizeList() {
       return [
         { img: require('./assets/pc.png'), label: '特等奖：笔记本电脑' },
-        { img: require('./assets/cook.png'), label: '一等奖：美的智能低糖煲' },
+        { img: require('./assets/cook.png'), label: '一等奖：智能低糖煲' },
         {
           img: require('./assets/robot.png'),
-          label: '二等奖：美的炒菜机器人',
+          label: '二等奖：炒菜机器人',
         },
-        { img: require('./assets/pan.png'), label: '三等奖：美的多功能锅' },
-        { img: require('./assets/pot.png'), label: '四等奖：美的养生壶' },
+        { img: require('./assets/pan.png'), label: '三等奖：多功能锅' },
+        { img: require('./assets/pot.png'), label: '四等奖：养生壶' },
         {
           img: require('./assets/toothBrush.png'),
-          label: '阳光普照奖：电动牙刷',
+          label: '阳光普照奖：电动牙刷/台灯',
         },
       ];
     },
@@ -331,11 +331,12 @@ export default {
       this.createCanvas();
       const { speed } = this;
       window.TagCanvas.Start('rootcanvas', 'tags', {
-        textColour: null,
+        textColour: '#fff',
+        textHeight: 28,
         initial: speed(),
         dragControl: 1,
-        textHeight: 20,
         noSelect: true,
+        // frontSelect: true,
         lock: 'xy',
       });
     },
@@ -370,7 +371,7 @@ export default {
         const { category, mode, qty, remain, allin } = form;
         console.log('form', form);
         let num = 1;
-        if (mode === 1 || mode === 5) {
+        if (mode === 1 || mode === 5 || mode === 10) {
           num = mode;
         } else if (mode === 0) {
           num = remain;
@@ -405,7 +406,7 @@ export default {
   height: 100%;
   position: relative;
   // background: linear-gradient(0deg, rgba(1, 2, 59, 1), rgba(17, 15, 155, 1));
-  background-image: url('./assets/bg1.jpg');
+  background-image: url('./assets/bg2.png');
   background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
@@ -486,7 +487,7 @@ export default {
     background: #fff;
     width: 160px;
     height: 160px;
-    border-radius: 4px;
+    border-radius: 10px;
     border: 1px solid #ccc;
     line-height: 160px;
     font-weight: bold;
@@ -503,11 +504,11 @@ export default {
       align-items: center;
     }
     &.numberOver::before {
-      content: attr(data-id);
+      // content: attr(data-id);
       width: 30px;
       height: 22px;
       line-height: 22px;
-      background-color: #fff;
+      background-color: transparent; //#fff;
       position: absolute;
       bottom: 0;
       left: 0;
@@ -519,7 +520,7 @@ export default {
 }
 
 .prize-list {
-  width: 15%;
+  width: 18%;
   position: absolute;
   left: 1rem;
   top: 5rem;
