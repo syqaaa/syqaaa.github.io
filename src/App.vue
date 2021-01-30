@@ -338,6 +338,8 @@ export default {
         noSelect: true,
         // frontSelect: true,
         lock: 'xy',
+        outlinMethod: 'size',
+        outlineIncrease: 17,
       });
     },
     reloadTagCanvas() {
@@ -406,7 +408,7 @@ export default {
   height: 100%;
   position: relative;
   // background: linear-gradient(0deg, rgba(1, 2, 59, 1), rgba(17, 15, 155, 1));
-  background-image: url('./assets/bg1.jpg');
+  background-image: url('./assets/bg2.png');
   background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
